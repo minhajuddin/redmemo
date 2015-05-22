@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "redmemo"
   spec.version       = Redmemo::VERSION
   spec.authors       = ["Khaja Minhajuddin"]
-  spec.email         = ["minhajuddin@cosmicvent.com"]
+  spec.email         = ["minhajuddink@gmail.com"]
 
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
