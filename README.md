@@ -1,4 +1,8 @@
-# Redmemo
+# Redmemo [![Build Status][travis-image]][travis-link]
+
+[travis-image]: https://secure.travis-ci.org/minhajuddin/redmemo.png?branch=master
+[travis-link]: http://travis-ci.org/minhajuddin/redmemo
+
 
 Redis based memoization, which should replace your counter caches and caches in
 your views/view models/decorators/exhibits.
