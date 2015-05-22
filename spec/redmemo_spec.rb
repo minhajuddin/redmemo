@@ -6,11 +6,15 @@ describe Redmemo do
     include Redmemo::Cache
 
     cache_method :compute_hp
+    cache_method :compute_mileage
+    cache_method :compute_speed, cache_key: :odd_cache_key
     attr_reader :id
 
     def initialize(id)
       @id = id
       @compute_hp = 0
+      @compute_mileage = 0
+      @speed = 0
     end
 
     def compute_hp
@@ -19,8 +23,22 @@ describe Redmemo do
       @id + @compute_hp
     end
 
+    def compute_mileage
+      @compute_mileage += 100
+      @id + @compute_mileage
+    end
+
+    def compute_speed
+      @speed += 10
+      @id + @speed
+    end
+
     def cache_key
       @id
+    end
+
+    def odd_cache_key
+      @id % 2
     end
 
   end
@@ -61,4 +79,56 @@ describe Redmemo do
     expect(b.compute_hp).to eq(34)
   end
 
+  it "caches data based on method" do
+    h = TestHarnessHorse.new(30)
+    10.times do
+      h.compute_hp
+      h.compute_mileage
+    end
+
+    expect(h.compute_hp).to eq(31)
+    expect(h.compute_mileage).to eq(130)
+  end
+
+  class Mule
+    include Redmemo::Cache
+
+    def compute_hp
+      "awesome"
+    end
+
+    def cache_key
+      1
+    end
+    cache_method :compute_hp
+  end
+
+  it "caches data based on class name" do
+    h = TestHarnessHorse.new(30)
+    b = Mule.new
+    10.times do
+      h.compute_hp
+      b.compute_hp
+    end
+
+    expect(h.compute_hp).to eq(31)
+    expect(b.compute_hp).to eq("awesome")
+  end
+
+  it "caches data based on the cache_key" do
+    a = TestHarnessHorse.new(30)
+    b = TestHarnessHorse.new(32)
+    c = TestHarnessHorse.new(34)
+
+    a.compute_speed #this is the only time it computes
+    b.compute_speed
+    c.compute_speed
+
+    expect(a.compute_speed).to eq(40)
+    expect(b.compute_speed).to eq(40)
+    expect(c.compute_speed).to eq(40)
+
+    d = TestHarnessHorse.new(35)
+    expect(d.compute_speed).to eq(45)
+  end
 end
