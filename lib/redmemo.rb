@@ -1,6 +1,7 @@
 require "redmemo/version"
 
 require 'redis'
+require 'base64'
 $redis = Redis.new
 
 module Redmemo
@@ -14,13 +15,14 @@ module Redmemo
       base.prepend(const_set("#{base.name}Cache", Module.new))
     end
 
+    # start of instance methods
     module InstanceMethods
       def encode_for_cache(val)
         Base64.encode64(Marshal.dump(val))
       end
 
       def decode_for_cache(encoded_val)
-        Base64.decode64(Marshal.load(encoded_val))
+        Marshal.load(Base64.decode64(encoded_val))
       end
 
       def cached_value_for(key, lazy_val)
@@ -33,9 +35,10 @@ module Redmemo
         end
       end
     end
+    # end of instance methods
 
+    # start of class methods
     module ClassMethods
-
       DEFAULT_OPTIONS = {cache_key: :cache_key}
       # usage:
       # cache_method :m1, :cache_key => :your_custom_cache_key
@@ -47,36 +50,25 @@ module Redmemo
         cache_module.class_eval do
           define_method(method_name) do
             key = "#{self.class.name}/#{method_name}/#{self.send(cache_key_method)}"
-            cached_value_for(key, ->{super})
+            cached_value_for(key, ->{super()})
           end
         end
       end
 
-      define_method(method_name) do
-        data = redis.get(self.cache_key)
-        if data
-          val = Base64.decode64(Marshal.load(data))
-          return val
+
+      # usage:
+      # cache_methods :m1, :m2, :m3, :cache_key => :your_custom_cache_key
+      # :cache_key is set to :cache_key by default, this is the activerecord cache key method
+      def cache_methods(args)
+        options = args.pop if args.last.is_a?(Hash)
+        methods = args
+
+        methods.each do |method|
+          self.cache_method(method, options)
         end
-
-        val = super
-        data = Base64.encode64(Marshal.dump(super))
-        redis.set(self.cache_key, data)
-        return val
       end
     end
-
-    # usage:
-    # cache_methods :m1, :m2, :m3, :cache_key => :your_custom_cache_key
-    # :cache_key is set to :cache_key by default, this is the activerecord cache key method
-    def cache_methods(args)
-      options = args.pop if args.last.is_a?(Hash)
-      methods = args
-
-      methods.each do |method|
-        self.cache_method(method, options)
-      end
-    end
+    # end of class methods
 
   end
 end
