@@ -1,4 +1,7 @@
-# Redmemo [![Build Status][travis-image]][travis-link]
+# Redmemo [![Build Status][travis-image]][travis-link] [![Code Climate](codeclimage-image)](codeclimage-link) [![Coverage Status](https://coveralls.io/repos/minhajuddin/redmemo/badge.svg)](https://coveralls.io/r/minhajuddin/redmemo)
+
+[codeclimage-image]: https://codeclimate.com/github/minhajuddin/redmemo/badges/gpa.svg
+[codeclimage-link]: https://codeclimate.com/github/minhajuddin/redmemo
 
 [travis-image]: https://secure.travis-ci.org/minhajuddin/redmemo.png?branch=master
 [travis-link]: http://travis-ci.org/minhajuddin/redmemo
