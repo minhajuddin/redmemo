@@ -31,6 +31,8 @@ Or install it yourself as:
 ~~~ruby
 require 'redmemo'
 class Group
+  include Redmemo::Cache
+
   def intesive_method
     # intensive work
     "awesome result"
