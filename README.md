@@ -1,4 +1,4 @@
-# Redmemo [![Build Status][travis-image]][travis-link] [![Code Climate](codeclimage-image)](codeclimage-link) [![Coverage Status](https://coveralls.io/repos/minhajuddin/redmemo/badge.svg)](https://coveralls.io/r/minhajuddin/redmemo)
+# Redmemo [![Build Status][travis-image]][travis-link] [![Code Climate](https://codeclimate.com/github/minhajuddin/redmemo/badges/gpa.svg)](https://codeclimate.com/github/minhajuddin/redmemo) [![Coverage Status](https://coveralls.io/repos/minhajuddin/redmemo/badge.svg)](https://coveralls.io/r/minhajuddin/redmemo)
 
 [codeclimage-image]: https://codeclimate.com/github/minhajuddin/redmemo/badges/gpa.svg
 [codeclimage-link]: https://codeclimate.com/github/minhajuddin/redmemo
