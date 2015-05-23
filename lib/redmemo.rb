@@ -59,7 +59,7 @@ module Redmemo
       # usage:
       # cache_methods :m1, :m2, :m3, :cache_key => :your_custom_cache_key
       # :cache_key is set to :cache_key by default, this is the activerecord cache key method
-      def cache_methods(args)
+      def cache_methods(*args)
         options = args.pop if args.last.is_a?(Hash)
         methods = args
 
