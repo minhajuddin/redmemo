@@ -1,0 +1,19 @@
+ - Should be able to save aversion
+ - Make Rails a dependency and then allow it to declare dependencies instead of cache_keys
+    
+    e.g.
+
+    class Contact
+      include Redmemo::Cache
+
+      # should add a after_add and after_destroy callback, should also have an expires_at?
+      # should use the Rails.cache method?
+      cache_method :group_names, depends_on: :groups
+
+      has_and_belongs_to_many :groups
+
+      def group_names
+        self.groups.map(&:name)
+      end
+
+    end
